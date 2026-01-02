@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Story Book - Diary Style</title>
+    <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@300;400;600&family=Patrick+Hand&display=swap" rel="stylesheet">
+    <style>
+        /* --- বেসিক রিসেট --- */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            /* ব্যাকগ্রাউন্ডে কাঠের টেবিলের মতো কালার */
+            background-color: #e8dcc5;
+            background-image: repeating-linear-gradient(45deg, #e0d2b8 0px, #e0d2b8 2px, #e8dcc5 2px, #e8dcc5 8px);
+            font-family: 'Patrick Hand', 'Hind Siliguri', cursive, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        /* --- বইয়ের পাতার মেইন কন্টেইনার --- */
+        .story-page {
+            position: relative;
+            width: 100%;
+            max-width: 600px;
+            background: #fffcf5; /* কাগজের কালার */
+            padding: 40px 40px 40px 60px; /* বাম পাশে একটু বেশি জায়গা (ছিঁড়া অংশের জন্য) */
+            box-shadow: 10px 10px 30px rgba(0,0,0,0.15); /* শ্যাডো */
+            min-height: 700px;
+            
+            /* বাম পাশে ছেঁড়া ইফেক্ট তৈরি (Masking/Gradient দিয়ে) */
+            background-image: 
+                linear-gradient(90deg, transparent 15px, #fffcf5 15px),
+                repeating-linear-gradient(#e5e5e5 0 1px, transparent 1px 100%); /* খাতার রুল করা দাগ */
+            background-size: 100% 100%, 100% 30px; /* রুল করা দাগের সাইজ */
+            background-position: 0 0, 0 40px; /* রুল শুরু হবে একটু নিচ থেকে */
+            background-repeat: no-repeat, repeat;
+            
+            /* বাম পাশের বর্ডারটা ঢেউ খেলানো বা ছেঁড়া দেখানোর জন্য ক্লিপ-পাথ */
+            clip-path: polygon(
+                15px 0%, 100% 0%, 100% 100%, 15px 100%,
+                0% 95%, 15px 90%, 
+                0% 85%, 15px 80%, 
+                0% 75%, 15px 70%, 
+                0% 65%, 15px 60%, 
+                0% 55%, 15px 50%, 
+                0% 45%, 15px 40%, 
+                0% 35%, 15px 30%, 
+                0% 25%, 15px 20%, 
+                0% 15%, 15px 10%, 
+                0% 5%
+            );
+        }
+
+        /* --- কনটেন্ট স্টাইল --- */
+        .content {
+            position: relative;
+            z-index: 2;
+            line-height: 30px; /* রুল করা দাগের সাথে মিল রাখার জন্য */
+            color: #2c3e50;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            color: #d35400;
+            text-align: center;
+            margin-bottom: 25px;
+            font-weight: 700;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+            border-bottom: 2px dashed #d35400;
+            display: inline-block;
+            padding-bottom: 5px;
+        }
+
+        p {
+            font-size: 1.2rem;
+            margin-bottom: 30px;
+            text-align: justify;
+        }
+
+        .author {
+            text-align: right;
+            font-style: italic;
+            margin-top: 40px;
+            font-weight: 600;
+            color: #555;
+        }
+
+        /* --- স্টিকার বা ছবি (অপশনাল) --- */
+        .sticker {
+            position: absolute;
+            top: -10px;
+            right: -10px;
+            width: 80px;
+            height: 80px;
+            background: rgba(255, 235, 59, 0.8);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transform: rotate(15deg);
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            font-size: 0.9rem;
+            font-weight: bold;
+            color: #e65100;
+            z-index: 3;
+        }
+
+        /* মোবাইল রেসপন্সিভ */
+        @media (max-width: 600px) {
+            .story-page {
+                padding: 30px 20px 30px 40px;
+                clip-path: polygon(
+                    10px 0%, 100% 0%, 100% 100%, 10px 100%,
+                    0% 95%, 10px 90%, 0% 85%, 10px 80%, 0% 75%, 10px 70%, 
+                    0% 65%, 10px 60%, 0% 55%, 10px 50%, 0% 45%, 10px 40%, 
+                    0% 35%, 10px 30%, 0% 25%, 10px 20%, 0% 15%, 10px 10%, 0% 5%
+                );
+            }
+            h1 { font-size: 1.8rem; }
+            p { font-size: 1rem; line-height: 30px; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="story-page">
+        <div class="sticker">নতুন<br>গল্প</div>
+
+        <div class="content">
+            <div style="text-align: center;">
+                <h1>রাতের যাত্রী</h1>
+            </div>
+            
+            <p>
+                অনেক অনেক দিন আগের কথা। এক ছিল সাহসী রাজপুত্র। সে ভালোবাসত অজানাকে জানতে। একদিন সে তার ঘোড়ায় চড়ে বেরিয়ে পড়ল অজানার উদ্দেশ্যে। পথ চলতে চলতে সে এসে পৌঁছাল এক ঘন জঙ্গলের ধারে।
+            </p>
+            <p>
+                সূর্য তখন ডুবু ডুবু। জঙ্গলের ভেতর থেকে ভেসে আসছিল পাখির কিচিরমিচির শব্দ। রাজপুত্র ভাবল, আজ রাতটা এই জঙ্গলের কোনো এক পুরনো মন্দিরেই কাটানো যাক। কিন্তু সে জানত না, এই জঙ্গল সাধারণ কোনো জঙ্গল নয়।
+            </p>
+            <p>
+                হঠাৎ ঝোপের আড়াল থেকে শোনা গেল খসখস শব্দ। রাজপুত্র তার তলোয়ার বের করল। চাঁদের আলোয় চকচক করে উঠল তার ধারালো তলোয়ার। সামনে এগিয়ে আসতেই সে দেখল...
+            </p>
+
+            <div class="author">
+                - মো. মঞ্জুরুল হক<br>
+                তারিখ: ০৩ জানুয়ারি, ২০২৬
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>
