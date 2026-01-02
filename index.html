@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>জীবনের অর্থনীতি - ১০০ পাতার ই-বুক</title>
+    <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@300;400;600&family=Patrick+Hand&display=swap" rel="stylesheet">
+    <style>
+        /* --- আগের CSS এর সাথে নতুন কিছু স্টাইল যোগ করা হলো --- */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            background-color: #e8dcc5;
+            background-image: repeating-linear-gradient(45deg, #e0d2b8 0px, #e0d2b8 2px, #e8dcc5 2px, #e8dcc5 8px);
+            font-family: 'Patrick Hand', 'Hind Siliguri', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .book-container {
+            position: relative;
+            width: 100%;
+            max-width: 600px;
+            min-height: 800px; /* হাইট একটু বাড়ানো হলো */
+        }
+
+        .story-page {
+            background: #fffcf5;
+            padding: 40px 40px 80px 60px; /* নিচে কন্ট্রোলের জন্য জায়গা */
+            box-shadow: 10px 10px 30px rgba(0,0,0,0.15);
+            height: 100%;
+            min-height: 800px;
+            position: relative;
+            background-image: 
+                linear-gradient(90deg, transparent 15px, #fffcf5 15px),
+                repeating-linear-gradient(#e5e5e5 0 1px, transparent 1px 100%);
+            background-size: 100% 100%, 100% 30px;
+            background-position: 0 0, 0 40px;
+            background-repeat: no-repeat, repeat;
+            clip-path: polygon(
+                15px 0%, 100% 0%, 100% 100%, 15px 100%,
+                0% 95%, 15px 90%, 0% 85%, 15px 80%, 
+                0% 75%, 15px 70%, 0% 65%, 15px 60%, 
+                0% 55%, 15px 50%, 0% 45%, 15px 40%, 
+                0% 35%, 15px 30%, 0% 25%, 15px 20%, 
+                0% 15%, 15px 10%, 0% 5%
+            );
+            transition: transform 0.4s ease-in-out, opacity 0.4s;
+        }
+
+        .content-area {
+            line-height: 30px;
+            color: #2c3e50;
+            min-height: 580px;
+        }
+
+        h1 {
+            font-size: 2rem;
+            color: #d35400;
+            text-align: center;
+            margin-bottom: 20px;
+            border-bottom: 2px dashed #d35400;
+            display: inline-block;
+            padding-bottom: 5px;
+        }
+
+        p { font-size: 1.2rem; margin-bottom: 20px; text-align: justify; }
+
+        /* --- নতুন নেভিগেশন প্যানেল --- */
+        .nav-panel {
+            position: absolute;
+            bottom: 30px;
+            left: 60px; /* ক্লিপ পাথের জন্য একটু ডানে */
+            right: 40px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            border-top: 1px dashed #aaa;
+            padding-top: 15px;
+        }
+
+        .nav-buttons {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        /* পেজ জাম্পার স্টাইল */
+        .page-jumper {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+            font-size: 0.9rem;
+            color: #555;
+        }
+
+        .page-jumper input {
+            width: 50px;
+            padding: 5px;
+            border: 1px solid #d35400;
+            border-radius: 5px;
+            text-align: center;
+            font-family: inherit;
+            background: #fff;
+        }
+
+        button {
+            background: #ff7043;
+            color: white;
+            border: none;
+            padding: 8px 20px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-family: 'Hind Siliguri', sans-serif;
+            font-size: 1rem;
+            box-shadow: 2px 2px 5px rgba(0,0,0,0.2);
+            transition: 0.2s;
+        }
+        button:hover { background: #d84315; transform: scale(1.05); }
+        button:disabled { background: #ccc; cursor: not-allowed; transform: none; }
+
+        .author-box { text-align: center; margin-top: 20px; font-style: italic; color: #555; font-size: 0.9rem;}
+
+        @media (max-width: 600px) {
+            .story-page { padding: 30px 20px 30px 35px; clip-path: polygon(10px 0%, 100% 0%, 100% 100%, 10px 100%, 0% 95%, 10px 90%, 0% 85%, 10px 80%, 0% 75%, 10px 70%, 0% 65%, 10px 60%, 0% 55%, 10px 50%, 0% 45%, 10px 40%, 0% 35%, 10px 30%, 0% 25%, 10px 20%, 0% 15%, 10px 10%, 0% 5%); }
+            h1 { font-size: 1.5rem; }
+            .nav-panel { left: 35px; right: 20px; }
+            .page-jumper { font-size: 0.8rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="book-container">
+        <div class="story-page" id="pageElement">
+            <div class="content-area">
+                <div style="text-align: center;">
+                    <h1 id="storyTitle">লোডিং...</h1>
+                </div>
+                <div id="storyText"></div>
+            </div>
+
+            <div class="nav-panel">
+                <div class="nav-buttons">
+                    <button id="prevBtn" onclick="changePage(-1)">&#8592; আগে</button>
+                    <span style="font-weight:bold; color:#777;" id="pageIndicator">1 / 100</span>
+                    <button id="nextBtn" onclick="changePage(1)">পরে &#8594;</button>
+                </div>
+                
+                <div class="page-jumper">
+                    <span>নং পাতায় যান:</span>
+                    <input type="number" id="jumpInput" min="1" max="100" placeholder="1-100">
+                    <button onclick="jumpToPage()" style="padding: 5px 10px; font-size: 0.8rem;">Go</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // --- ১ থেকে ২০ পর্যন্ত আগের গল্পগুলো আছে (সংক্ষেপে) ---
+        // আমি এখানে ১-২০ কপি করছি না, আপনি আগের কোড থেকে ১-২০ এখানে বসিয়ে নেবেন।
+        // উদাহরণের জন্য আমি ১ নম্বর রেখে বাকিগুলো ডামি দিচ্ছি, এরপর ২১-৩০ নতুন দিচ্ছি।
+        
+        const manualStories = [
+            {
+                title: "১. অর্থনীতির আসল অর্থ",
+                text: `<p>অর্থনীতি মানে শুধুই টাকা-পয়সার হিসাব নয়। এটি হলো 'নির্বাচন' বা 'Choice'-এর বিজ্ঞান। সীমিত সম্পদ দিয়ে কীভাবে সেরাটা বেছে নেব, সেটাই অর্থনীতি শেখায়।</p><p>শিক্ষা: সঠিক জায়গায় সময় বিনিয়োগ করাই আসল অর্থনীতি।</p>`
+            },
+            // ... এখানে ২ থেকে ২০ পর্যন্ত আপনার আগের গল্পগুলো বসবে ...
+            // (কোড ছোট রাখার জন্য আমি লুপ দিয়ে পূর্ণ করব, আপনি রিয়েল কোডে পেস্ট করে দেবেন)
+        ];
+
+        // --- ২১ থেকে ৩০ পর্যন্ত নতুন গল্প (অর্থনীতি + জীবন + আইসিটি) ---
+        const newStories = [
+            {
+                title: "২১. প্যারেটো প্রিন্সিপাল (80/20 রুল)",
+                text: `<p>ইতালীয় অর্থনীতিবিদ প্যারেটো লক্ষ্য করেছিলেন, তার বাগানের ৮০% মটরশুঁটি মাত্র ২০% গাছ থেকে আসে।</p>
+                       <p>জীবনেও তাই। তোমার ৮০% ফলাফল আসে তোমার মাত্র ২০% কাজের মাধ্যমে। তাই সারাদিন ব্যস্ত না থেকে, সেই ২০% গুরুত্বপূর্ণ কাজ খুঁজে বের করো যা তোমাকে এগিয়ে নেবে।</p>
+                       <p><strong>শিক্ষা:</strong> কঠোর পরিশ্রমের চেয়ে স্মার্ট পরিশ্রম বেশি জরুরি।</p>`
+            },
+            {
+                title: "২২. পার্কিনসন্স ল (Parkinson's Law)",
+                text: `<p>"কাজ শেষ করার জন্য যতটুকু সময় বরাদ্দ থাকে, কাজ ততটুকু সময়েই ছড়িয়ে পড়ে।"</p>
+                       <p>তুমি যদি একটি অ্যাসাইনমেন্টের জন্য ৭ দিন সময় নাও, তবে তা করতে ৭ দিনই লাগবে। আর যদি ২ দিন সময় নাও, তবে ২ দিনেই শেষ হবে।</p>
+                       <p><strong>শিক্ষা:</strong> নিজের জন্য ডেডলাইন বা সময়সীমা কমিয়ে আনো, উৎপাদনশীলতা বাড়বে।</p>`
+            },
+            {
+                title: "২৩. ফ্রিল্যান্সিং ও গিগ ইকোনমি",
+                text: `<p>প্রথাগত ৯টা-৫টার চাকরির বাইরে এখন 'গিগ ইকোনমি'র যুগ। এখানে তুমি কোনো বসের অধীনে নও, বরং প্রজেক্ট ভিত্তিক কাজ করো।</p>
+                       <p>একজন অর্থনীতিবিদ হিসেবে বলি, এখানে তোমার স্কিলই তোমার পণ্য। যার স্কিল যত ইউনিক, তার রেট তত বেশি।</p>
+                       <p><strong>শিক্ষা:</strong> ডিগ্রির চেয়ে দক্ষতার কদর এখন বিশ্বজুড়ে।</p>`
+            },
+            {
+                title: "২৪. ব্লু ওশেন স্ট্র্যাটেজি",
+                text: `<p>যেখানে সবাই প্রতিযোগিতা করে (রেড ওশেন), সেখানে লাভ কম। কিন্তু যেখানে কোনো প্রতিযোগী নেই, সেটাই 'ব্লু ওশেন'।</p>
+                       <p>ক্যারিয়ারে সবাই যা করছে, তুমিও তা না করে, নতুন কিছু শেখো। যেমন: সাধারণ গ্রাফিক ডিজাইনার অনেক আছে, কিন্তু 'AI প্রম্পট ইঞ্জিনিয়ার' কম।</p>
+                       <p><strong>শিক্ষা:</strong> ভিড়ের মধ্যে না দাঁড়িয়ে, নিজের আলাদা রাস্তা তৈরি করো।</p>`
+            },
+            {
+                title: "২৫. নেটওয়ার্কিং বনাম তোষামোদ",
+                text: `<p>অনেকে ভাবে নেটওয়ার্কিং মানে তেল মারা। ভুল! অর্থনীতিতে নেটওয়ার্কিং হলো 'পারস্পরিক ভ্যালু এক্সচেঞ্জ'।</p>
+                       <p>তুমি কাউকে সাহায্য করো, সে তোমাকে সাহায্য করবে। তোমার পরিচিতি বা 'Contacts' হলো তোমার অদৃশ্য সম্পদ।</p>
+                       <p><strong>শিক্ষা:</strong> একা দ্রুত যাওয়া যায়, কিন্তু বহুদূর যেতে হলে সবাইকে নিয়ে যেতে হয়।</p>`
+            },
+            {
+                title: "২৬. ইমোশনাল ইন্টেলিজেন্স (EQ)",
+                text: `<p>আইকিউ (IQ) তোমাকে চাকরি পাইয়ে দেবে, কিন্তু ইকিউ (EQ) তোমাকে প্রমোশন দেবে।</p>
+                       <p>রাগ নিয়ন্ত্রণ করা, অন্যের অনুভূতি বোঝা—এগুলো অর্থনীতির ভাষায় 'সফট স্কিল'। কর্পোরেট জগতে বা ব্যবসায় টেকনিক্যাল জ্ঞানের চেয়ে মানুষের সাথে মেশার ক্ষমতা বেশি দামি।</p>
+                       <p><strong>শিক্ষা:</strong> মেধার সাথে আচরণের সংমিশ্রণ ঘটাও।</p>`
+            },
+            {
+                title: "২৭. ব্যর্থতা হলো ফিডব্যাক",
+                text: `<p>স্টার্টআপ বা ব্যবসায় ব্যর্থতা মানে শেষ নয়। অর্থনীতিতে একে বলে 'মার্কেট ফিডব্যাক'।</p>
+                       <p>তোমার পণ্য বা সেবাটি কেন চলল না, তা বিশ্লেষণ করো। টমাস আলভা এডিসন হাজারবার ব্যর্থ হয়ে বাল্ব আবিষ্কার করেছিলেন। তিনি বলেছিলেন, "আমি ব্যর্থ হইনি, আমি ১০,০০০টি উপায় খুঁজে পেয়েছি যা কাজ করে না।"</p>
+                       <p><strong>শিক্ষা:</strong> ব্যর্থতা হলো সফলতার সিঁড়ি।</p>`
+            },
+            {
+                title: "২৮. অর্থের মনস্তত্ত্ব (Psychology of Money)",
+                text: `<p>মানুষ লজিক দিয়ে টাকা আয় করে, কিন্তু ইমোশন দিয়ে খরচ করে।</p>
+                       <p>শপিং মলে 'Sale' দেখলে আমরা অপ্রয়োজনীয় জিনিস কিনি। নিজেকে প্রশ্ন করো—"এটা কি আমার প্রয়োজন, নাকি শুধুই ইচ্ছা?"</p>
+                       <p><strong>শিক্ষা:</strong> পকেট সামলানোর আগে মন সামলাও।</p>`
+            },
+            {
+                title: "২৯. পার্সোনাল ব্র্যান্ডিং",
+                text: `<p>আজকের যুগে তুমি নিজেই একটি ব্র্যান্ড। মানুষ তোমাকে কী হিসেবে চেনে?</p>
+                       <p>ফেসবুক বা লিঙ্কডইনে তুমি কী শেয়ার করছ, তা তোমার পোর্টফোলিও। একজন ভালো কন্টেন্ট ক্রিয়েটর বা এক্সপার্ট হিসেবে নিজেকে অনলাইনে তুলে ধরো।</p>
+                       <p><strong>শিক্ষা:</strong> প্রচারেই প্রসার, তবে তা হতে হবে ইতিবাচক।</p>`
+            },
+            {
+                title: "৩০. কাইজেন (Kaizen - নিরন্তর উন্নতি)",
+                text: `<p>জাপানি শব্দ 'কাইজেন' মানে হলো ক্রমাগত উন্নতি। একদিনে বিপ্লব ঘটার দরকার নেই।</p>
+                       <p>আজকের তুমি যেন গতকালের তুমির চেয়ে একটু হলেও ভালো হও। প্রতিদিন নতুন একটি শব্দ শেখো, বা একটি কোড শেখো।</p>
+                       <p><strong>শিক্ষা:</strong> থেমো না, ছোট ছোট পায়ে এগিয়ে চলো।</p>`
+            }
+        ];
+
+        // --- সম্পূর্ণ ১০০ পাতার অ্যারে তৈরি ---
+        let allPages = [];
+
+        // ১. প্রথমে ১-২০ পাতা যোগ (এখানে আমি ডামি লুপ দিচ্ছি, আপনি আপনার রিয়েল ডাটা দেবেন)
+        // নোট: আপনি আগের কোড থেকে ১-২০ এখানে ম্যানুয়ালি বসিয়ে দেবেন।
+        for(let i=0; i<20; i++) {
+             // যদি manualStories এ ডাটা থাকে তবে সেটা, না হলে ডামি
+             if(manualStories[i]) allPages.push(manualStories[i]);
+             else allPages.push({ title: `অধ্যায় ${i+1}: জীবনের পাঠ`, text: `<p>এই অধ্যায়ে জীবনের প্রাথমিক শিক্ষা নিয়ে আলোচনা করা হয়েছে। (পূর্বের ডাটা থেকে পূরণ করুন)</p>` });
+        }
+
+        // ২. এরপর ২১-৩০ পাতা যোগ (নতুন লেখাগুলো)
+        allPages = allPages.concat(newStories);
+
+        // ৩. এরপর ৩১-১০০ পাতা লুপ দিয়ে তৈরি (ভবিষ্যতে এডিট করার জন্য)
+        for (let i = 31; i <= 100; i++) {
+            allPages.push({
+                title: `অধ্যায় ${i}: সফলতার নতুন ধাপ`,
+                text: `<p>এই পাতাটি বর্তমানে লেখার প্রক্রিয়ায় আছে। এখানে অর্থনীতি, আইসিটি এবং ব্যক্তিগত উন্নয়নের আরও গভীর বিষয়গুলো যুক্ত করা হবে।</p>
+                       <p><strong>টিপস:</strong> আপনি চাইলেই এই অংশটি পরিবর্তন করে নতুন গল্প লিখতে পারেন।</p>
+                       <div class="author-box">- মো. মঞ্জুরুল হক<br>পেজ নং: ${i}</div>`
+            });
+        }
+
+        // --- অ্যাপ লজিক ---
+        let currentPage = 0;
+        const titleEl = document.getElementById('storyTitle');
+        const textEl = document.getElementById('storyText');
+        const pageIndEl = document.getElementById('pageIndicator');
+        const prevBtn = document.getElementById('prevBtn');
+        const nextBtn = document.getElementById('nextBtn');
+        const pageElement = document.getElementById('pageElement');
+        const jumpInput = document.getElementById('jumpInput');
+
+        function loadPage(index) {
+            // এনিমেশন
+            pageElement.style.opacity = 0;
+            pageElement.style.transform = "rotateY(-5deg)";
+
+            setTimeout(() => {
+                const pageData = allPages[index];
+                titleEl.innerHTML = pageData.title;
+                textEl.innerHTML = pageData.text;
+                pageIndEl.innerText = `${index + 1} / ${allPages.length}`;
+                jumpInput.value = index + 1; // ইনপুট বক্সেও নাম্বার আপডেট হবে
+
+                prevBtn.disabled = index === 0;
+                nextBtn.disabled = index === allPages.length - 1;
+
+                pageElement.style.opacity = 1;
+                pageElement.style.transform = "rotateY(0deg)";
+            }, 300);
+        }
+
+        function changePage(direction) {
+            const newPage = currentPage + direction;
+            if (newPage >= 0 && newPage < allPages.length) {
+                currentPage = newPage;
+                loadPage(currentPage);
+            }
+        }
+
+        // নির্দিষ্ট পাতায় জাম্প করার ফাংশন
+        function jumpToPage() {
+            const pageNum = parseInt(jumpInput.value);
+            if (pageNum >= 1 && pageNum <= allPages.length) {
+                currentPage = pageNum - 1; // অ্যারে ইনডেক্স ০ থেকে শুরু তাই ১ বিয়োগ
+                loadPage(currentPage);
+            } else {
+                alert("দয়া করে ১ থেকে ১০০ এর মধ্যে একটি সংখ্যা দিন!");
+            }
+        }
+
+        // প্রথম লোড
+        loadPage(0);
+
+    </script>
+</body>
+</html>
